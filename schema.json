@@ -1,0 +1,173 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#", 
+	"$id": "https://example.com/object1604994701.json", 
+	"title": "Glazbeni instrumenti", 
+	"type": "array",
+    "description": "Komponente koje opisuju glazbene instrumente",
+	"default": [],
+	"items":{
+		"$id": "#root/items", 
+		"title": "Items", 
+		"type": "object",
+		"required": [
+			"naziv",
+			"wikipedija",
+			"vrsta_instrumenta",
+			"zemlja_podrijetla",
+			"stoljeće_pojave",
+			"glazbeni_žanrovi",
+			"dijelovi",
+			"način_sviranja",
+			"najpoznatiji_izvođači",
+			"najpoznatiji_proizvođači"
+		],
+		"properties": {
+			"naziv": {
+				"$id": "#root/items/naziv", 
+				"title": "Naziv", 
+				"type": "string",
+				"default": "",
+				"examples": [
+					"Klasična gitara"
+				],
+				"pattern": "^.*$"
+			},
+			"wikipedija": {
+				"$id": "#root/items/wikipedija", 
+				"title": "Wikipedija", 
+				"type": "string",
+				"default": "",
+				"examples": [
+					"https://en.wikipedia.org/wiki/Classical_guitar"
+				],
+				"pattern": "^.*$"
+			},
+			"vrsta_instrumenta": {
+				"$id": "#root/items/vrsta_instrumenta", 
+				"title": "Vrsta_instrumenta", 
+				"type": "string",
+				"default": "",
+				"examples": [
+					"Kordofon"
+				],
+				"pattern": "^.*$"
+			},
+			"zemlja_podrijetla": {
+				"$id": "#root/items/zemlja_podrijetla", 
+				"title": "Zemlja_podrijetla", 
+				"type": "string",
+				"default": "",
+				"examples": [
+					"Španjolska"
+				],
+				"pattern": "^.*$"
+			},
+			"stoljeće_pojave": {
+				"$id": "#root/items/stoljeće_pojave", 
+				"title": "Stoljeće_pojave", 
+				"type": "integer",
+				"examples": [
+					18
+				],
+				"default": 0
+			},
+			"glazbeni_žanrovi": {
+				"$id": "#root/items/glazbeni_žanrovi", 
+				"title": "Glazbeni_žanrovi", 
+				"type": "array",
+				"default": [],
+				"items":{
+					"$id": "#root/items/glazbeni_žanrovi/items", 
+					"title": "Items", 
+					"type": "string",
+					"default": "",
+					"examples": [
+						"Klasika"
+					],
+					"pattern": "^.*$"
+				}
+			},
+			"dijelovi": {
+				"$id": "#root/items/dijelovi", 
+				"title": "Dijelovi", 
+				"type": "array",
+				"default": [],
+				"items":{
+					"$id": "#root/items/dijelovi/items", 
+					"title": "Items", 
+					"type": "object",
+					"required": [
+						"dio",
+						"materijal"
+					],
+					"properties": {
+						"dio": {
+							"$id": "#root/items/dijelovi/items/dio", 
+							"title": "Dio", 
+							"type": "string",
+							"default": "",
+							"examples": [
+								"Prve tri žice"
+							],
+							"pattern": "^.*$"
+						},
+						"materijal": {
+							"$id": "#root/items/dijelovi/items/materijal", 
+							"title": "Materijal", 
+							"type": "string",
+							"default": "",
+							"examples": [
+								"Najlon"
+							],
+							"pattern": "^.*$"
+						}
+					}
+				}
+
+			},
+			"način_sviranja": {
+				"$id": "#root/items/način_sviranja", 
+				"title": "Način_sviranja", 
+				"type": "string",
+				"default": "",
+				"examples": [
+					"Trzanjem prstima po žicama"
+				],
+				"pattern": "^.*$"
+			},
+			"najpoznatiji_izvođači": {
+				"$id": "#root/items/najpoznatiji_izvođači", 
+				"title": "Najpoznatiji_izvođači", 
+				"type": "array",
+				"default": [],
+				"items":{
+					"$id": "#root/items/najpoznatiji_izvođači/items", 
+					"title": "Items", 
+					"type": "string",
+					"default": "",
+					"examples": [
+						"Joaquín Rodrigo"
+					],
+					"pattern": "^.*$"
+				}
+			},
+			"najpoznatiji_proizvođači": {
+				"$id": "#root/items/najpoznatiji_proizvođači", 
+				"title": "Najpoznatiji_proizvođači", 
+				"type": "array",
+				"default": [],
+				"items":{
+					"$id": "#root/items/najpoznatiji_proizvođači/items", 
+					"title": "Items", 
+					"type": "string",
+					"default": "",
+					"examples": [
+						"Cordoba"
+					],
+					"pattern": "^.*$"
+				}
+			}
+		}
+	}
+
+}

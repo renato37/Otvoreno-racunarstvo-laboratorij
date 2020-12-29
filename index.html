@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta content="author" content = "Renato Čiž">
+        <meta content="viewport" content = "Release-1.0">
+    </head>
+
+<body>
+    <form id = "index1">
+        <p><b>Opis licencije:</b></p>
+        <ul>
+            <li>Komercijalna upotreba</li>
+            <li>Izmjena</li>
+            <li>Distribucija</li>
+            <li>Privatna upotreba</li>
+        </ul>
+
+    <p>Podaci se nalaze na hrvatskom jeziku.</p>
+    <p><b>Atributi u tablici:</b></p>
+    <ul>
+        <li><b>naziv </b>označava naziv glazbenog instrumenta</li>
+        <li><b>wikipedija </b>označava link na wikipediju</li>
+        <li><b>vrsta_instrumenta </b>označava vrste instrumenata(kordofon, aerofon, glazbala s tipkama, udaraljke, elektrofon)</li>
+        
+        <li><b>zemlja_podrijetla </b>označava zemlju izumitelja kojem se pripisuje patent instrumenta</li>
+        <li><b>stoljeće_pojave </b>označava vremenski period u kojem se spominje prva pojava instrumenta</li>
+        <li><b>glazbeni_žanrovi</b> označava jedan ili više žanrova u kojima se često pojavljuje taj instrument</li>
+        <li><b>dijelovi </b>označavaju od kojih se dijelova sastoji instrument te od kojeg je materijala taj dio izrađen</li>
+        <li><b>način_sviranja </b>označava ukratko princim dolaska do tonova instrumentom</li>
+        <li><b>najpoznatiji_izvođači </b>označava neke poznate izvođače koji sviraju na instrumentu</li>
+        <li><b>najpoznatiji_proizvođači </b>označava neke poznate proizvođače koji su nekada ili još uvijek proizvode instrument</li>
+    </ul>
+
+ 
+</form>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+</body>
+<script>
+    const mydata = "{{ data|safe }}";
+    var data1 = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(mydata));
+    var data2 = 'data:text/csv;charset=utf-8,' + encodeURI(mydata)
+
+    $('<a href="data:' + data1 + '" download="data.json">download JSON  </a>').appendTo('#index1');
+    $('<a href="data:' + data2 + '" download="data.csv">download CSV</a>').appendTo('#index1');
+</script>
+
+
+</html>

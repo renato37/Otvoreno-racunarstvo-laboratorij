@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+
+<body style="background-color: #cfe5ff; display: inline-flex;">
+    <form id = "pokusaj" style="background-color: #cfe5ff;">
+    <div>
+        <input type="String" id="ulaz" name="fname" style="background-color: #0084f0;">{% csrf_token %}
+        <button type="submit" style="background-color: #7245f0;"><b>Filtriraj</b></button>
+    </div>
+    <div style="background-color: #007cf0; display: inline-flex;">
+        <input type="radio" id="svi" name="vrsta" value="svi" checked>
+        <label for="svi">Svi</label><br>
+        <input type="radio" id="naziv" name="vrsta" value="naziv">
+        <label for="naziv">Naziv</label><br>
+        <input type="radio" id="Wiki" name="vrsta" value="Wiki">
+        <label for="Wiki">Wiki</label>
+        <input type="radio" id="vrsta_inst" name="vrsta" value="vrsta_inst">
+        <label for="vrsta_inst">Vrsta instrumenta</label><br>
+        <input type="radio" id="zemlja" name="vrsta" value="zemlja">
+        <label for="zemlja">Zemlja</label><br>
+        <input type="radio" id="st" name="vrsta" value="st">
+        <label for="st">Stoljeće</label>
+
+        <input type="radio" id="znr" name="vrsta" value="znr">
+        <label for="znr">Žanr</label><br>
+        <input type="radio" id="nacin" name="vrsta" value="nacin">
+        <label for="nacin">Način sviranja</label><br>
+        <input type="radio" id="izv" name="vrsta" value="izv">
+        <label for="izv">Izvođači</label>
+        <input type="radio" id="pro" name="vrsta" value="pro">
+        <label for="pro">Proizvođači</label><br>
+        <input type="radio" id="Dio" name="vrsta" value="Dio">
+        <label for="Dio">Dio</label><br>
+        <input type="radio" id="mat" name="vrsta" value="mat">
+        <label for="mat">Materijal</label>
+    </div>
+    <table border = "2" cellpadding = "5" collapsing = "5" style="font-size:11px">
+        <tr style="background-color: #00b8f0;">
+            <td>naziv</td>
+            <td>wikipedija</td>
+            <td>vrsta_instrumenta</td>
+            <td>zemlja_podrijetla</td>
+            <td>stoljeće_pojave</td>
+            <td>glazbeni_žanrovi</td>
+            <td>način_sviranja</td>
+            <td>najpoznatiji_izvođači</td>
+            <td>najpoznatiji_proizvođači</td>
+            <td>dio</td>
+            <td>materijal</td>
+        </tr>
+        <div id = tablica ">
+            {% for i in data%}
+
+            <tr style="background-color: #c9f3f5;">
+                <td>{{i.naziv}}</td>
+                <td>{{i.wikipedija}}</td>
+                <td>{{i.vrsta_instrumenta}}</td>
+                <td>{{i.zemlja_podrijetla}}</td>
+                <td>{{i.stoljeće_pojave}}</td>
+                <td>{{i.glazbeni_žanrovi}}</td>
+                <td>{{i.način_sviranja}}</td>
+                <td>{{i.najpoznatiji_izvođači}}</td>
+                <td>{{i.najpoznatiji_proizvođači}}</td>
+                <td>{{i.dio}}</td>
+                <td>{{i.materijal}}</td>
+            </tr>
+            {% endfor %}
+        </div>
+    </table>
+</form>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+</body>
+<script>
+    const mydata = "{{ data|safe }}";
+    var data1 = "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(mydata));
+    var data2 = 'data:text/csv;charset=utf-8,' + encodeURI(mydata)
+
+    $('<a href="data:' + data1 + '" download="data.json">download JSON  </a>').appendTo('#pokusaj');
+    $('<a href="data:' + data2 + '" download="data.csv">download CSV</a>').appendTo('#pokusaj');
+
+    $(document).on('submit', '#pokusaj', function(e){
+        e.preventDefault();
+        $.ajax({
+            type:'GET',
+            url:'',
+            context: document.body,
+            data:{
+                fname:$('#ulaz').val(),
+                vrsta:$('input[name = "vrsta"]:checked').val(),
+                csrfmiddlewaretoken:$('input[fname=csrfmiddlewaretoken]').val()
+            },
+            success:function(result){
+                $("body").html(result)
+            }
+
+        });
+    });
+</script>
+
+
+</html>

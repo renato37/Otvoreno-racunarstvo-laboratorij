@@ -1,11 +1,11 @@
-# Release-1.0
+# Release-2.0
  Opis licencije:
  - Komercijalna upotreba
  - Izmjena
  - Distribucija
  - Privatna upotreba
 ## **Renato Čiž**
-### Release 1.0.
+### Release 2.0.
 Podaci se nalaze na hrvatskom jeziku.
 ### Atributi u tablici:
  - **naziv** označava naziv glazbenog instrumenta
@@ -18,7 +18,22 @@ Podaci se nalaze na hrvatskom jeziku.
  - **način_sviranja** označava ukratko princim dolaska do tonova instrumentom
  - **najpoznatiji_izvođači** označava neke poznate izvođače koji sviraju na instrumentu
  - **najpoznatiji_proizvođači** označava neke poznate proizvođače koji su nekada ili još uvijek proizvode instrument
- 
-Baza podataka može se nadopuniti. Način sviranja se može puno bolje opisati. Najpoznatiji izvođači i proizvođači su možda krivi nazivi s obzirom koliko se ljudi i tvrtki nije nabrojalo. Dijelova ima puno više nego što sam nabrojao. Za neka stoljeća pojave nisam siguran u podatak koji sam pronašao na internetu.
 
-### Smatram da je implementacija baze dobra i da je treba dalje nadopunjavat što je i svrha otvorenih podataka, da ih se može nadopunjavati i prepravljati.
+### Napravljene web stranice
+- **datatable.html** Filtriranje podataka iz baze, link za skinut filtriranu tablicu u csv i json formatu
+- **index.html** Opis tablice iz prve laboratorijske vježbe
+
+##Napravljeno pomoću djanga.
+Bazu podataka potrebno prilagodit za vlastita računala.
+Za pokretanje servera treba instalirati virtual environment npr. venv i pokrenut naredbom "activate.bat".
+Potrebo unzipat "glazbeni_instrumenti.zip"
+Za pokrenut stranice koristiti naredbu "python manage.py runserver".
+Linkovi:
+ - http://localhost:8000/index/ za index.html
+ - http://localhost:8000/ za datatable.html
+
+Stranica datatable.html i index.html rade bez pokretanja servera, ali bez potrebnih podataka.
+ 
+Smatram da je baza podataka dosta nepotpuna. Način sviranja se može puno bolje opisat. Najpoznatiji izvođači i proizvođači su možda krivi nazivi s obzirom koliko se ljudi nije nabrojalo. Dijelova ima puno više nego što sam nabrojao. Za neka stoljeća pojave nisam siguran u podatak koji sam pronašao na internetu.
+
+### Smatram da je implementacija baze dobra i da je treba dalje nadopunjavat što je i svrha otvorenih podataka, da ih se može nadopunit i prepravit.
