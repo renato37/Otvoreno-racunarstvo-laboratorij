@@ -1,0 +1,315 @@
+{
+   "openapi": "3.0.3",
+   "info": {
+      "title": "Glazbeni instrumenti",
+      "description": "Opis nekih glazbenih instrumenata.",
+      "public": true,
+      "version": "v3",
+      "license": "MIT",
+      "contact": {"name": "renato37",
+                    "url": "https://github.com/renato37/Otvoreno-racunarstvo-laboratorij",
+                    "email": "renato.ciz19@gmail.com"}
+   },
+   "host": "localhost:8000",
+   "schemes": [
+      "http"
+   ],
+   "basePath": "/",
+   "consumes": [
+      "application/json"
+   ],
+   "produces": [
+      "application/json"
+   ],
+   "securityDefinitions": {
+      "Basic": {
+         "type": "basic"
+      }
+   },
+   "security": [
+      {
+         "Basic": []
+      }
+   ],
+   "paths": {
+      "/child/{id}/": {
+         "get": {
+            "operationId": "child_read",
+            "description": "Popis i opis materijala komponenata instrumenta.",
+            "parameters": [{"id":"id"}],
+            "responses": {
+               "200": {
+                    "description": "Prikazano.",
+                    "content": {
+                        "*/*": {
+                            "schema": {
+                            "type": "Object",
+                            "items": {
+                                "$ref": "#/glazbeni_instrumenti_dump.sql"
+                            }
+                            }
+                        }
+                    }
+
+               },
+               "400":{
+                   "description": "Pogreška pri zahtjevu."
+               },
+               "404":{
+                   "description": "Nije pronađeno."
+               }
+            },
+            "tags": [
+               "child"
+            ]
+         },
+         "post": {
+            "operationId": "child_create",
+            "description": "Dodavanje komponenata i materijala.",
+            "parameters": [{"id":"id","dio":"dio","materijal":"materijal"}],
+            "responses": {
+               "201": {
+                  "description": "Dodano."
+               },
+               "400":{
+                   "description": "Pogreška pri zahtjevu."
+               },
+               "404":{
+                   "description": "Nije pronađeno."
+               }
+            },
+            "tags": [
+               "child"
+            ]
+         },
+         "put": {
+            "operationId": "child_update",
+            "description": "Izmjena materijala određenog dijela.",
+            "parameters": [{"id":"id","dio":"dio","materijal":"materijal"}],
+            "responses": {
+               "201": {
+                  "description": "Izmijenjeno."
+               },
+               "400":{
+                   "description": "Pogreška pri zahtjevu."
+               },
+               "404":{
+                   "description": "Nije pronađeno."
+               }
+            },
+            "tags": [
+               "child"
+            ]
+         },
+         "delete": {
+            "operationId": "child_delete",
+            "description": "Brisanje dijela i njegovog materijala.",
+            "parameters": [{"id":"id","dio":"dio","materijal":"materijal"}],
+            "responses": {
+               "204": {
+                  "description": "Izbrisano."
+               },
+               "400":{
+                   "description": "Pogreška pri zahtjevu."
+               },
+               "404":{
+                   "description": "Nije pronađeno."
+               }
+            },
+            "tags": [
+               "child"
+            ]
+         },
+         "parameters": [
+            {
+               "name": "id",
+               "in": "path",
+               "required": true,
+               "type": "string"
+            }
+         ]
+      },
+      "/database/": {
+         "get": {
+            "operationId": "database_list",
+            "description": "",
+            "parameters": [],
+            "responses": {
+               "200": {
+                  "description": ""
+               }
+            },
+            "tags": [
+               "database"
+            ]
+         },
+         "parameters": []
+      },
+      "/index/": {
+         "get": {
+            "operationId": "index_list",
+            "description": "",
+            "parameters": [],
+            "responses": {
+               "200": {
+                  "description": ""
+               }
+            },
+            "tags": [
+               "index"
+            ]
+         },
+         "parameters": []
+      },
+      "/instrument/{id}/": {
+         "get": {
+            "operationId": "instrument_read",
+            "description": "Prikaz instrumenta s tim ID.",
+            "parameters": [{"id":"id"}],
+            "responses": {
+               "201": {
+                  "description": "Prikazano.",
+                  "content": {
+                        "*/*": {
+                            "schema": {
+                            "type": "Object",
+                            "items": {
+                                "$ref": "#/glazbeni_instrumenti_dump.sql"
+                            }
+                            }
+                        }
+                    }
+               },
+               "400":{
+                   "description": "Pogreška pri zahtjevu."
+               },
+               "404":{
+                   "description": "Nije pronađeno."
+               }
+            },
+            "tags": [
+               "instrument"
+            ]
+         },
+         "parameters": [
+            {
+               "name": "id",
+               "in": "path",
+               "required": true,
+               "type": "string"
+            }
+         ]
+      },
+      "/instrumenti/": {
+         "get": {
+            "operationId": "instrumenti_list",
+            "description": "Popis svih instrumenata.",
+            "parameters": [],
+            "responses": {
+               "201": {
+                  "description": "Prikazano.",
+                  "content": {
+                        "*/*": {
+                            "schema": {
+                            "type": "Object",
+                            "items": {
+                                "$ref": "#/glazbeni_instrumenti_dump.sql"
+                            }
+                            }
+                        }
+                    }
+               },
+               "400":{
+                   "description": "Pogreška pri zahtjevu."
+               },
+               "404":{
+                   "description": "Nije pronađeno."
+               }
+            },
+            "tags": [
+               "instrumenti"
+            ]
+         },
+         "parameters": []
+      },
+      "/specification/{id}/": {
+         "get": {
+            "operationId": "specification_read",
+            "description": "Komponente instrumenta s tim ID.",
+            "parameters": [{"id":"id"}],
+            "responses": {
+               "201": {
+                  "description": "Prikazano.",
+                  "content": {
+                        "*/*": {
+                            "schema": {
+                            "type": "Object",
+                            "items": {
+                                "$ref": "#/glazbeni_instrumenti_dump.sql"
+                            }
+                            }
+                        }
+                    }
+               },
+               "400":{
+                   "description": "Pogreška pri zahtjevu."
+               },
+               "404":{
+                   "description": "Nije pronađeno."
+               }
+            },
+            "tags": [
+               "specification"
+            ]
+         },
+         "parameters": [
+            {
+               "name": "id",
+               "in": "path",
+               "required": true,
+               "type": "string"
+            }
+         ]
+      },
+      "/type/{species}/": {
+         "get": {
+            "operationId": "type_read",
+            "description": "Popis instrumenata tog tipa.",
+            "parameters": [{"type":"species"}],
+            "responses": {
+               "201": {
+                  "description": "Prikazano.",
+                  "content": {
+                        "*/*": {
+                            "schema": {
+                            "type": "Object",
+                            "items": {
+                                "$ref": "#/glazbeni_instrumenti_dump.sql"
+                            }
+                            }
+                        }
+                    }
+               },
+               "400":{
+                   "description": "Pogreška pri zahtjevu."
+               },
+               "404":{
+                   "description": "Nije pronađeno."
+               }
+            },
+            "tags": [
+               "type"
+            ]
+         },
+         "parameters": [
+            {
+               "name": "species",
+               "in": "path",
+               "required": true,
+               "type": "string"
+            }
+         ]
+      }
+   },
+   "definitions": {}
+}

@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'glazbeni_instrumenti',
     'rest_framework.authtoken', 
-    
+    'rest_framework_swagger',
+    'drf_yasg'
 ]
 
 MIDDLEWARE = [
@@ -96,8 +97,12 @@ DEFAULT_CHARSER = 'UTF-8'
 REST_FRAMEWORK = {
 'DEFAULT_AUTHENTICATION_CLASSES': (
     'rest_framework.authentication.SessionAuthentication',
+    'rest_framework.authentication.BasicAuthentication',
+    
 ),
 }
+
+REST_FRAMEWORK = { 'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema' }
 
 
 # Password validation
@@ -137,3 +142,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
