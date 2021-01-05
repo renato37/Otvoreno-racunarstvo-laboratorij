@@ -1,10 +1,10 @@
-# Release-2.0
+# Release-1.0
  Opis licencije:
  - Komercijalna upotreba
  - Izmjena
  - Distribucija
  - Privatna upotreba
-## **Renato Čiž**
+
 ### Release 2.0.
 Podaci se nalaze na hrvatskom jeziku.
 ### Atributi u tablici:
@@ -36,4 +36,18 @@ Stranica datatable.html i index.html rade bez pokretanja servera, ali bez potreb
  
 Smatram da je baza podataka dosta nepotpuna. Način sviranja se može puno bolje opisat. Najpoznatiji izvođači i proizvođači su možda krivi nazivi s obzirom koliko se ljudi nije nabrojalo. Dijelova ima puno više nego što sam nabrojao. Za neka stoljeća pojave nisam siguran u podatak koji sam pronašao na internetu.
 
+### Release 3.0.
+##Napravljeno pomoću djanga.
+Dodane route za lakši pregled podataka.
+ - instrumenti/ za popis svih instrumenata
+ - instrument/<id>/ za pregled instrumenta s tim id-om
+ - specification/<id>/ za pregled specifikacija instrumenta s tim id-om
+ - child/<id>/ za pregled dijelova i od čeka su izrađeni, dodavanje, izmijenu i brisanje dijelova
+ - type/<species>/ za pregled svih instrumenata iste vrste
+ - doc/ ugrađena funkcionalnost koja vraća djelomičan prikaz openApi specifikacije s mogućnošću skidanja specifikacije, potrebno za nadopunit da bi bila kompletna specifikacija
+ 
+Openapi.json opisuje detaljnije route. 
+
+
 ### Smatram da je implementacija baze dobra i da je treba dalje nadopunjavat što je i svrha otvorenih podataka, da ih se može nadopunit i prepravit.
+## **Renato Čiž**
