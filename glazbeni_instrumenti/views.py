@@ -20,17 +20,29 @@ import numbers
 from django.core import serializers
 from django.core.serializers.json import DjangoJSONEncoder
 from .serializers import SerializerInstrumenata
-
+import urllib
+from datetime import timedelta
 from rest_framework.decorators import api_view
-
+from django.core.cache import cache
+import time 
 from rest_framework import serializers
-
+from django.core.files.base import ContentFile
 from rest_framework import status
 from django.shortcuts import redirect
 
 from django.utils.html import urlize
 
 from django.http import HttpResponse
+from urllib.request import urlopen 
+
+import requests
+from django.views.decorators.cache import cache_page
+import base64
+
+from PIL import Image
+from io import BytesIO
+from datetime import datetime 
+
 
 def my_test_500_view(request):
     # Return an "Internal Server Error" 500 response code.
@@ -39,6 +51,8 @@ def my_test_500_view(request):
 def my_test_404_view(request):
     # Return an "Internal Server Error" 500 response code.
     return HttpResponse(status=404)
+
+
 
 
 class SerializerData(serializers.Serializer):
@@ -148,6 +162,11 @@ class FrontPage(APIView):
         try:
             instrumenti = Instrumenti.objects.all()
             allData=[{  
+                        '@context': {
+                            "head":'https://schema.org/',
+                            "image":"localhost:8000/kolekcija/" + str(instrument.dio1) + "/picture/",
+                        },
+                        '@type': 'Thing',
                         'naziv': instrument.naziv,
                         'link':{
                             "href": "/instrument/"+str(instrument.dio1)+"/",
@@ -169,6 +188,11 @@ class SpecificInstrument(APIView):
 
             allData={  
                         'id': instrumenti[0].dio1,
+                        '@context': {
+                            "head":'https://schema.org/',
+                            "image":"localhost:8000/kolekcija/" + str(instrumenti[0].dio1) + "/picture/",
+                        },
+                        '@type': 'Thing',
                         'naziv': instrumenti[0].naziv,
                         'links':[{
                             "href": "/specification/"+str(instrumenti[0].dio1)+"/",
@@ -192,6 +216,11 @@ class Specification(APIView):
             instrumenti = Instrumenti.objects.all().filter(dio1=id)
             allData={  
                         'id': instrumenti[0].dio1,
+                        '@context': {
+                            "head":'https://schema.org/',
+                            "image":"localhost:8000/kolekcija/" + str(instrumenti[0].dio1) + "/picture/",
+                        },
+                        '@type': 'Thing',
                         'naziv': instrumenti[0].naziv,
                         'links':[{
                             "href": "https://hr.wikipedia.org/wiki/"+str(instrumenti[0].wikipedija),
@@ -203,7 +232,12 @@ class Specification(APIView):
                         "type": 'GET'}],
                         'zemlja_podrijetla': instrumenti[0].zemlja_podrijetla,
                         'stoljeće_pojave': instrumenti[0].stoljeće_pojave,
-                         'glazbeni_žanrovi': instrumenti[0].glazbeni_žanrovi,
+                        'glazbeni_žanrovi': {
+                            '@context': {
+                                "head":'https://schema.org/',
+                                'name':instrumenti[0].glazbeni_žanrovi,
+                            },
+                            '@type': 'MusicRecording'},
                         'način_sviranja': instrumenti[0].način_sviranja,
                         'najpoznatiji_izvođači': instrumenti[0].najpoznatiji_izvođači,
                         'najpoznatiji_proizvođači': instrumenti[0].najpoznatiji_proizvođači
@@ -212,6 +246,9 @@ class Specification(APIView):
             return Response({"status":"OK","message":"Fetched department object","response":allData},status=status.HTTP_200_OK)
         except:
             return Response({"status": "Not Found",  "message": "Department with the provided ID doesn't exist",  "reponse": {}},status=status.HTTP_400_BAD_REQUEST)
+
+
+
 
 class Type(APIView):
 
@@ -222,6 +259,11 @@ class Type(APIView):
                 return Response({"status": "Not Found",  "message": "Department with the provided ID doesn't exist",  "reponse": {}},status=status.HTTP_404_NOT_FOUND)
 
             allData=[{  
+                        '@context': {
+                            "head":'https://schema.org/',
+                            "image":"localhost:8000/kolekcija/" + str(instrumenti[0].dio1) + "/picture/",
+                        },
+                        '@type': 'Thing',
                         'naziv': instrument.naziv,
                         'link':{
                             "href": "/instrument/"+str(instrument.dio1)+"/",
@@ -244,7 +286,7 @@ class Child(APIView):
             instrument = Instrumenti.objects.all()
             allData=[
                     
-                    {   
+                        {   
                         'naziv': instrument.filter(dio1=id)[0].naziv,
                         'links':[{
                             "href": "/specification/"+str(id)+"/",
@@ -326,7 +368,7 @@ class Child(APIView):
             dijelovi = Dijelovi.objects.all().filter(id1=id)
             if(not Dijelovi.objects.all().filter(id1=id)):
                 return Response({"status": "Not Found",  "message": "Department with the provided ID doesn't exist",  "reponse": {}},status=status.HTTP_404_NOT_FOUND)
-
+            
             instrument = Instrumenti.objects.all()
             dio=json.loads(request.body)["dio"]
             materijal=json.loads(request.body)["materijal"]
@@ -342,7 +384,81 @@ class Child(APIView):
             return Response({"status":"No content","message":"Fetched department object","response":allData},status=status.HTTP_204_NO_CONTENT)
         except:
             return Response({"status": "Not Found",  "message": "Department with the provided ID doesn't exist",  "reponse": {}},status=status.HTTP_404_NOT_FOUND)
-    
+
+class KolekcijaSlika(APIView):
+    def get(self, request,id):
+        try:
+            instrumenti = Instrumenti.objects.all().filter(dio1=id)
+            try:
+                nova = Privremena.objects.get(id1=id)
+                vrijeme = Vrijeme.objects.update(id1=id, time = datetime.now())
+                sada = Vrijeme.objects.get(id1=id)
+                if(nova.timestamp_end>sada.time):
+                    print(1)
+                    with open(nova.img, "rb") as f:
+                        response1 = HttpResponse(f.read(), content_type="image/jpeg")
+                        response1['Content-Disposition'] = 'image; filename="image.jpeg"'
+                        return response1
+                else:
+                    time = datetime.now() + timedelta(minutes=5)
+                    print(2)
+                    q = Privremena.objects.filter(id1=id).update(timestamp_end=time)
+                    with open(nova.img, "rb") as f:
+                        response1 = HttpResponse(f.read(), content_type="image/jpeg")
+                        response1['Content-Disposition'] = 'image; filename="image.jpeg"'
+                        return response1
+            except:
+                response = requests.get('https://hr.wikipedia.org/api/rest_v1/page/summary/'+instrumenti[0].naziv)
+                data = response.json()
+
+                image = base64.b64encode(requests.get(data['originalimage']['source']).content)
+                k = base64.b64decode(image)
+
+                slika = 'glazbeni_instrumenti\slike\ '+ id + '.jpeg'
+                t = datetime.now() + timedelta(minutes=5)
+                
+                Privremena.objects.create(id1=id, img=slika, timestamp_end=t)
+                filehandle = open(slika, 'wb')
+                filehandle.write(k)
+                filehandle.close()
+                
+                
+                with open(slika, "rb") as f:
+                    response1 = HttpResponse(f.read(), content_type="image/jpeg")
+                    response1['Content-Disposition'] = 'image; filename="image.jpeg"'
+                    return response1
+        except:
+            return Response({"status": "Not Found",  "message": "Department with the provided ID doesn't exist",  "reponse": {}},status=status.HTTP_400_BAD_REQUEST)
+
+class Kolekcija(APIView):
+
+    def get(self, request,id):
+        try:
+            instrumenti = Instrumenti.objects.all().filter(dio1=id)
+            allData={  
+                        'id': instrumenti[0].dio1,
+                        '@context': {
+                            "head":'https://schema.org/',
+                            "image":"localhost:8000/kolekcija/" + str(instrument.dio1) + "/picture/",
+                        },
+                        '@type': 'Thing',
+                        'naziv': instrumenti[0].naziv,
+                        'links':[{
+                            "href": "https://hr.wikipedia.org/wiki/"+str(instrumenti[0].wikipedija),
+                            "rel": "wikipedija",
+                            "type": 'GET'
+                        },
+                        {"href": "/type/"+ instrumenti[0].vrsta_instrumenta+"/",
+                        "rel": "Vrsta instrumenta",
+                        "type": 'GET'}],
+                        'slika': "/kolekcija/"+ str(instrumenti[0].dio1)+"/picture/"
+                        }
+            contex = {'data':allData}
+            return Response({"status":"OK","message":"Fetched department object","response":allData},status=status.HTTP_200_OK)
+        except:
+            return Response({"status": "Not Found",  "message": "Department with the provided ID doesn't exist",  "reponse": {}},status=status.HTTP_400_BAD_REQUEST)
+
+
 #status.HTTP_200_OK
 #status.HTTP_201_CREATED
 #status.HTTP_204_NO_CONTENT

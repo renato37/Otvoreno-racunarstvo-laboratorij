@@ -26,6 +26,25 @@ class Dijelovi(models.Model):
     class Meta:
         db_table = 'dijelovi'
 
+class Privremena(models.Model):
+    id1 = models.IntegerField(primary_key=True, db_column='id')
+    img  = models.CharField(max_length=10000, db_column = 'image')
+    timestamp_end = models.DateTimeField(db_column = 'timestamp_end')
+
+    class Meta:
+        db_table = 'privremena'
+
+
+class PrivremenaD(models.Model):
+    id1 = models.IntegerField(primary_key=True)
+
+class Vrijeme(models.Model):
+    id1 = models.IntegerField(primary_key=True, db_column='id')
+    time = models.DateTimeField(db_column = 'time')
+    class Meta:
+        db_table = 'Vrijeme'
+    
+
 class Sve(models.Model):
     naziv = models.CharField(max_length=255, primary_key=True, db_column='naziv')
     wikipedija = models.CharField(max_length=255, db_column='wikipedija')

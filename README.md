@@ -1,11 +1,11 @@
-# Release-1.0
+# Release-4.0
  Opis licencije:
  - Komercijalna upotreba
  - Izmjena
  - Distribucija
  - Privatna upotreba
-
-### Release 2.0.
+## **Renato Čiž**
+### Release 4.0.
 Podaci se nalaze na hrvatskom jeziku.
 ### Atributi u tablici:
  - **naziv** označava naziv glazbenog instrumenta
@@ -36,18 +36,18 @@ Stranica datatable.html i index.html rade bez pokretanja servera, ali bez potreb
  
 Smatram da je baza podataka dosta nepotpuna. Način sviranja se može puno bolje opisat. Najpoznatiji izvođači i proizvođači su možda krivi nazivi s obzirom koliko se ljudi nije nabrojalo. Dijelova ima puno više nego što sam nabrojao. Za neka stoljeća pojave nisam siguran u podatak koji sam pronašao na internetu.
 
-### Release 3.0.
-##Napravljeno pomoću djanga.
-Dodane route za lakši pregled podataka.
- - instrumenti/ za popis svih instrumenata
- - instrument/<id>/ za pregled instrumenta s tim id-om
- - specification/<id>/ za pregled specifikacija instrumenta s tim id-om
- - child/<id>/ za pregled dijelova i od čeka su izrađeni, dodavanje, izmijenu i brisanje dijelova
- - type/<species>/ za pregled svih instrumenata iste vrste
- - doc/ ugrađena funkcionalnost koja vraća djelomičan prikaz openApi specifikacije s mogućnošću skidanja specifikacije, potrebno za nadopunit da bi bila kompletna specifikacija
- 
-Openapi.json opisuje detaljnije route. 
+### Dodane rute za kolekciju i sliku kolekcije
 
+#### Ruta za sliku kolekcije:
+ - Učitava sliku
+ - Postoji li slika u memoriji prikazuje ju kao image.jpeg
+ - ako slika ne postoji u lokalnoj privremenoj memoriji(isteklo vrijeme ili ne postoji slika) povezuje se s API-jem
+ - iz responsea API-ja wikipedije učitava body, kodira, dekodira i piše byte kod u .jpeg sliku te dodaje u bazu(ili ju ažurira) njen id, rutu gdje je spremljena slika, i timestamp(vrijeme do kada se može učitavati slika lokalno)
+ - trenutno vrijeme sprema se u svoju bazu jer uspoređivanje vremena iz baze i current vremena nije moguće s obzirom da baza pridodaje nastavak +00:00 za odstupanje od trenutka spremanja podataka na bazu pa nije kompatibilno za usporedbu vremena isteka lokalizacije slike
+
+ #### Dodan JSON-LD
+  - za nazive instrumenata s opcijom prikaza slike iz lokalne privremene memorije
+  - za žanrove glazbe 
+    
 
 ### Smatram da je implementacija baze dobra i da je treba dalje nadopunjavat što je i svrha otvorenih podataka, da ih se može nadopunit i prepravit.
-## **Renato Čiž**

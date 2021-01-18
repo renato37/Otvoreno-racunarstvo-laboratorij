@@ -16,6 +16,8 @@ from django.views.generic import TemplateView
 from django.views.defaults import page_not_found, server_error
 
 
+
+
 schema_view = get_schema_view(
    openapi.Info(
       title="Glazbeni instrumenti",
@@ -34,9 +36,12 @@ urlpatterns = [
     path('instrumenti/',FrontPage.as_view(),name="singleGroup"),
     path('instrument/<id>/',SpecificInstrument.as_view(),name="instrument"),
     path('specification/<id>/',Specification.as_view(),name="specification"),
+    path('kolekcija/<id>/',Kolekcija.as_view(),name="Kolekcija"),
+    path('kolekcija/<id>/picture/',KolekcijaSlika.as_view(),name="KolekcijaSlika"),
     path('child/<id>/',Child.as_view(),name="child"),
     path('type/<species>/',Type.as_view(),name="type"),
     path('doc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    
 ]
 
 

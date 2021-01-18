@@ -1,7 +1,7 @@
 ﻿[
    {
       "naziv": "Klasična gitara",
-      "wikipedija": "https://en.wikipedia.org/wiki/Classical_guitar",
+      "wikipedija": "https://hr.wikipedia.org/wiki/Klasična_gitara",
       "vrsta_instrumenta": "Kordofon",
       "zemlja_podrijetla": "Španjolska",
       "stoljeće_pojave": 18,
@@ -42,7 +42,7 @@
    },
    {
       "naziv": "Klavir",
-      "wikipedija": "https://bs.wikipedia.org/wiki/Klavir",
+      "wikipedija": "https://hr.wikipedia.org/wiki/Glasovir",
       "vrsta_instrumenta": "Glazbala s tipkama",
       "zemlja_podrijetla": "Italija",
       "stoljeće_pojave": 18,
